@@ -3,7 +3,6 @@ package main.java.logic;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import main.java.model.State;
 
 public class Expression {

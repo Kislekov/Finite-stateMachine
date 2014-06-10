@@ -1,28 +1,11 @@
 package test.java.logic;
 
-
 import static org.junit.Assert.assertEquals;
-import main.java.antlr4.RegexLexer;
-import main.java.antlr4.RegexListener;
-import main.java.antlr4.RegexParser;
 import main.java.logic.Creator;
-import main.java.logic.Expression;
-import main.java.logic.RegexListenerImplementation;
 import main.java.logic.WrongRegexFormatException;
 import main.java.model.FiniteStateMachine;
-
 import org.junit.Before;
 import org.junit.Test;
-
-
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.tree.*;
-
-import java.io.InputStream;
 import java.util.regex.Pattern;
 
 public class CreatorTest {

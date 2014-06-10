@@ -1,13 +1,8 @@
 package main.java.logic;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import main.java.antlr4.RegexLexer;
 import main.java.antlr4.RegexParser;
 import main.java.model.FiniteStateMachine;
-import main.java.model.State;
-
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BailErrorStrategy;
 import org.antlr.v4.runtime.CharStream;
@@ -17,10 +12,6 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class Creator {
-	private State entryState=new State();
-	private List<Integer> scopesStarts=new ArrayList<>();
-	private Character previousCharacter;
-	private Character currentCharacter;
 	
 	public FiniteStateMachine createFromRegex(String regex) throws WrongRegexFormatException{
 		ParseTree tree = parseRegex(regex); 

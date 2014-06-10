@@ -1,15 +1,10 @@
 package main.java.logic;
 
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.antlr.v4.parse.BlockSetTransformer.setAlt_return;
-import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
-
 import main.java.antlr4.RegexBaseListener;
 import main.java.antlr4.RegexParser.ExpressionContext;
 import main.java.antlr4.RegexParser.MultipeExpressionGeneralContext;
@@ -17,12 +12,8 @@ import main.java.antlr4.RegexParser.MultipleExpressionPlusContext;
 import main.java.antlr4.RegexParser.MultipleExpressionStarContext;
 import main.java.antlr4.RegexParser.ParenExpressionContext;
 import main.java.antlr4.RegexParser.SymbolExpressionContext;
-
-
 import main.java.model.Action;
 import main.java.model.State;
-
-
 
 public class RegexListenerImplementation extends RegexBaseListener{
 	
