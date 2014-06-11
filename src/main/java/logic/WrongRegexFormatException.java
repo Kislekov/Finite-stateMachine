@@ -1,6 +1,11 @@
 package main.java.logic;
 
 public class WrongRegexFormatException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public WrongRegexFormatException() {
 		super();
 		// TODO Auto-generated constructor stub

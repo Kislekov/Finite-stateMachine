@@ -1,28 +1,11 @@
 package test.java.logic;
 
-
 import static org.junit.Assert.assertEquals;
-import main.java.antlr4.RegexLexer;
-import main.java.antlr4.RegexListener;
-import main.java.antlr4.RegexParser;
 import main.java.logic.Creator;
-import main.java.logic.Expression;
-import main.java.logic.RegexListenerImplementation;
 import main.java.logic.WrongRegexFormatException;
 import main.java.model.FiniteStateMachine;
-
 import org.junit.Before;
 import org.junit.Test;
-
-
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.tree.*;
-
-import java.io.InputStream;
 import java.util.regex.Pattern;
 
 public class CreatorTest {
@@ -84,5 +67,18 @@ public class CreatorTest {
 		
 	}
 	
+	@Test
+	public void shouldWorkAsRegexDo4() throws WrongRegexFormatException{
+		String regex="a*|bca*";
+		FiniteStateMachine finiteStateMachine=creator.createFromRegex(regex);
+		String line1="aaaaaaaaa";
+		assertEquals(Pattern.matches(regex, line1),finiteStateMachine.isMatch(line1));
+		String line2="bc";
+		assertEquals(Pattern.matches(regex, line2), finiteStateMachine.isMatch(line2));
+		String line3="bca";
+		assertEquals(Pattern.matches(regex, line3), finiteStateMachine.isMatch(line3));
+		String line4="bcaa";
+		assertEquals(Pattern.matches(regex, line4), finiteStateMachine.isMatch(line4));		
+	}
 	
 }

@@ -61,4 +61,19 @@ public class FiniteStateMachine {
 			return false;
 		}
 	}
+	
+	@Override
+	public String toString(){
+		String result = "";
+		result += "[ startStates :\n\t";
+		for(State state : startStates){
+			result += state.toString() + "\n\t";
+		}
+		result += "\nendStates :\n\t";
+		for(State state : endStates){
+			result += state.toString() + "\n\t";
+		}
+		result += "]";
+		return result;
+	}
 }

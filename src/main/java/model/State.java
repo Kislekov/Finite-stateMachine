@@ -27,5 +27,15 @@ public class State {
 		exitActions.add(exitAction);
 	}
 	
+	@Override
+	public String toString(){
+		String result = "";
+		result += "< id :" + id + "\n\t exitActions :\n\t\t";
+		for(Action action : exitActions){
+			result += action.toString() + "\n";
+		}
+		result += "\t>";
+		return result;
+	}
 	
 }
