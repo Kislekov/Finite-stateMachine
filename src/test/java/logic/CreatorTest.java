@@ -67,5 +67,18 @@ public class CreatorTest {
 		
 	}
 	
+	@Test
+	public void shouldWorkAsRegexDo4() throws WrongRegexFormatException{
+		String regex="a*|bca*";
+		FiniteStateMachine finiteStateMachine=creator.createFromRegex(regex);
+		String line1="aaaaaaaaa";
+		assertEquals(Pattern.matches(regex, line1),finiteStateMachine.isMatch(line1));
+		String line2="bc";
+		assertEquals(Pattern.matches(regex, line2), finiteStateMachine.isMatch(line2));
+		String line3="bca";
+		assertEquals(Pattern.matches(regex, line3), finiteStateMachine.isMatch(line3));
+		String line4="bcaa";
+		assertEquals(Pattern.matches(regex, line4), finiteStateMachine.isMatch(line4));		
+	}
 	
 }

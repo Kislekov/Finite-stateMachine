@@ -17,5 +17,10 @@ public class Action {
 		this.nextState = nextState;
 	}
 
-	
+	@Override
+	public String toString(){
+		String result = "";
+		result += "(actionLetter : " + actionLetter + " nextStateId : " + nextState.getId() + ")";
+		return result;
+	}
 }

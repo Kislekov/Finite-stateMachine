@@ -17,6 +17,7 @@ public class Creator {
 		ParseTree tree = parseRegex(regex); 
         Expression expression = processRegex(tree);
         FiniteStateMachine finiteStateMachine = createFiniteStateMachine(expression);
+        System.out.println(finiteStateMachine.toString());
         return finiteStateMachine;
 	}
 
