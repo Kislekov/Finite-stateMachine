@@ -1,10 +1,13 @@
 package main.java.logic;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
+
 import main.java.antlr4.RegexBaseListener;
 import main.java.antlr4.RegexParser.ExpressionContext;
 import main.java.antlr4.RegexParser.MultipeExpressionGeneralContext;
@@ -19,19 +22,19 @@ public class RegexListenerImplementation extends RegexBaseListener{
 	
 	private Map<ParseTree,Expression> map=new HashMap<>();
 	private Expression finalExpression;
+	private List<State> allStates=new ArrayList<>();
 	
 	@Override
 	public void exitExpression(ExpressionContext ctx) {
 		int leftPartLength=ctx.getChildCount();
-		Expression expression=new Expression();
+		finalExpression=new Expression();
 		if(ctx.expression()!=null){
-			addRightPartSates(ctx, expression);	
+			addRightPartSates(ctx, finalExpression);	
 			leftPartLength-=2;
 		}
 		createAllChildConnection(ctx, leftPartLength);
-		addLeftPartStates(ctx, leftPartLength, expression);
-		finalExpression=expression;
-		map.put(ctx, expression);
+		addLeftPartStates(ctx, leftPartLength, finalExpression);
+		map.put(ctx, finalExpression);
 	}
 
 
@@ -80,13 +83,20 @@ public class RegexListenerImplementation extends RegexBaseListener{
 	@Override
 	public void enterSymbolExpression(SymbolExpressionContext ctx) {
 		Character symbol=ctx.getText().charAt(0);
-		State previousState=new State();
-		State nextState=new State();
+		State previousState=createRegistredState();
+		State nextState=createRegistredState();
 		createAction(previousState,nextState,symbol);
 		Expression expression=new Expression();
 		expression.addStartState(previousState);
 		expression.addEndState(nextState);
+		expression.setAllStates(allStates);
 		map.put(ctx,expression);
+	}
+	
+	private State createRegistredState(){
+		State state=new State();
+		allStates.add(state);
+		return state;
 	}
 	
 	private void createActions(List<State> startStates,List<State> endStates,Character symbol) {

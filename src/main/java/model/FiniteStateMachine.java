@@ -5,14 +5,17 @@ import java.util.List;
 
 public class FiniteStateMachine {
 	
-	private List<State> startStates=new ArrayList<>();
+	private State startState=new State();
 	private List<State> endStates=new ArrayList<>();
+	private List<State> allStates=new ArrayList<>();
 	
-	public List<State> getStartStates() {
-		return startStates;
+
+	
+	public State getStartState() {
+		return startState;
 	}
-	public void setStartStates(List<State> startStates) {
-		this.startStates = startStates;
+	public void setStartState(State startState) {
+		this.startState = startState;
 	}
 	public List<State> getEndStates() {
 		return endStates;
@@ -21,15 +24,17 @@ public class FiniteStateMachine {
 		this.endStates = endStates;
 	}
 	
+	
+	public List<State> getAllStates() {
+		return allStates;
+	}
+	public void setAllStates(List<State> allStates) {
+		this.allStates = allStates;
+	}
 	public boolean isMatch(String string){
 		int startIndex=0;
-		for (State startState : startStates) {
-			if(isEndConditionsMet(startState, string, startIndex)){
-				return true;
-			}
-			if(isStateMatch(string, startIndex, startState)){
-				return true;
-			}
+		if(isStateMatch(string, startIndex, startState)){
+			return true;
 		}
 		return false;
 	}
@@ -66,9 +71,7 @@ public class FiniteStateMachine {
 	public String toString(){
 		String result = "";
 		result += "[ startStates :\n\t";
-		for(State state : startStates){
-			result += state.toString() + "\n\t";
-		}
+		result=startState.toString();
 		result += "\nendStates :\n\t";
 		for(State state : endStates){
 			result += state.toString() + "\n\t";

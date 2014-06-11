@@ -1,8 +1,13 @@
 package main.java.logic;
 
+import java.util.List;
+
 import main.java.antlr4.RegexLexer;
 import main.java.antlr4.RegexParser;
+import main.java.model.Action;
 import main.java.model.FiniteStateMachine;
+import main.java.model.State;
+
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BailErrorStrategy;
 import org.antlr.v4.runtime.CharStream;
@@ -17,20 +22,30 @@ public class Creator {
 		ParseTree tree = parseRegex(regex); 
         Expression expression = processRegex(tree);
         FiniteStateMachine finiteStateMachine = createFiniteStateMachine(expression);
-        System.out.println(finiteStateMachine.toString());
         return finiteStateMachine;
 	}
 
 	private FiniteStateMachine createFiniteStateMachine(Expression expression) {
 		FiniteStateMachine finiteStateMachine=new FiniteStateMachine();
-        finiteStateMachine.setStartStates(expression.getStartStates());
-        finiteStateMachine.setEndStates(expression.getEndStates());
+		createStartStateConnection(finiteStateMachine.getStartState(), expression.getStartStates());
+		finiteStateMachine.setEndStates(expression.getEndStates());
+		finiteStateMachine.setAllStates(expression.getAllStates());
 		return finiteStateMachine;
 	}
 
+	private void createStartStateConnection(State startState,List<State> nextStates){
+		for(State nextState:nextStates){
+			Action exitAction=new Action();
+			exitAction.setNextState(nextState);
+			startState.addExitAction(exitAction);
+		}
+		
+	}
+	
 	private Expression processRegex(ParseTree tree) {
 		ParseTreeWalker walker = new ParseTreeWalker(); 
         RegexListenerImplementation regexListener=new RegexListenerImplementation();
+        //regexListener.baseStateInit();
         walker.walk(regexListener, tree); 
         Expression expression=regexListener.getFinalExpression();
 		return expression;

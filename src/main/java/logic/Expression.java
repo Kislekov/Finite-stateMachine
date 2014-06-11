@@ -8,7 +8,8 @@ import main.java.model.State;
 public class Expression {
 
 	private List<State> startStates=new ArrayList<>();
-	private List<State> endStates=new ArrayList<>();	
+	private List<State> endStates=new ArrayList<>();
+	private List<State> allStates=new ArrayList<>();
 	
 	public List<State> getStartStates() {
 		return startStates;
@@ -41,6 +42,14 @@ public class Expression {
 	}
 	public void clearEndStates() {
 		endStates.clear();
+	}
+	
+	
+	public List<State> getAllStates() {
+		return allStates;
+	}
+	public void setAllStates(List<State> allStates) {
+		this.allStates = allStates;
 	}
 	
 	
