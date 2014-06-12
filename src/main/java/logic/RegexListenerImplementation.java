@@ -34,6 +34,7 @@ public class RegexListenerImplementation extends RegexBaseListener{
 		}
 		createAllChildConnection(ctx, leftPartLength);
 		addLeftPartStates(ctx, leftPartLength, finalExpression);
+		finalExpression.setAllStates(allStates);
 		map.put(ctx, finalExpression);
 	}
 
@@ -89,7 +90,6 @@ public class RegexListenerImplementation extends RegexBaseListener{
 		Expression expression=new Expression();
 		expression.addStartState(previousState);
 		expression.addEndState(nextState);
-		expression.setAllStates(allStates);
 		map.put(ctx,expression);
 	}
 	

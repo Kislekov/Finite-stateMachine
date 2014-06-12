@@ -45,7 +45,6 @@ public class Creator {
 	private Expression processRegex(ParseTree tree) {
 		ParseTreeWalker walker = new ParseTreeWalker(); 
         RegexListenerImplementation regexListener=new RegexListenerImplementation();
-        //regexListener.baseStateInit();
         walker.walk(regexListener, tree); 
         Expression expression=regexListener.getFinalExpression();
 		return expression;

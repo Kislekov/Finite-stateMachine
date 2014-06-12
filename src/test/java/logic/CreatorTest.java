@@ -1,11 +1,14 @@
 package test.java.logic;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import main.java.logic.Creator;
 import main.java.logic.WrongRegexFormatException;
 import main.java.model.FiniteStateMachine;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import java.util.regex.Pattern;
 
 public class CreatorTest {
@@ -79,6 +82,13 @@ public class CreatorTest {
 		assertEquals(Pattern.matches(regex, line3), finiteStateMachine.isMatch(line3));
 		String line4="bcaa";
 		assertEquals(Pattern.matches(regex, line4), finiteStateMachine.isMatch(line4));		
+	}
+	
+	@Test
+	public void shouldCreateAllStatementList() throws Exception{
+		String regex="a*|bca*";
+		FiniteStateMachine finiteStateMachine=creator.createFromRegex(regex);
+		assertNotNull(finiteStateMachine.getAllStates());
 	}
 	
 }
