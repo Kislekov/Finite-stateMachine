@@ -24,6 +24,6 @@ public class EntryPoint {
 		assertEquals(Pattern.matches(regex, line1),finiteStateMachine.isMatch(line1));
 		finiteStateMachine.determine();
 		System.out.println(finiteStateMachine.toString());
-		//assertEquals(Pattern.matches(regex, line1),finiteStateMachine.isMatch(line1));
+		assertEquals(Pattern.matches(regex, line1),finiteStateMachine.isMatch(line1));
 	}
 }

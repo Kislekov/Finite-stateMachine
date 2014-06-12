@@ -112,8 +112,8 @@ public class FiniteStateMachine {
 					if( ! Dstates.contains(U)){
 						Dstates.add(U);
 						unsignedState.push(U);
-						tableRow.add(U);
 					}
+					tableRow.add(U);
 				}
 			}
 		}
@@ -154,7 +154,7 @@ public class FiniteStateMachine {
 		List<Character> resultList = new ArrayList<>();
 		for( State state : allStates){
 			for( Action action : state.getExitActions()){
-				if( ! resultList.contains(action.getActionLetter())){
+				if( action.getActionLetter() != null && ! resultList.contains(action.getActionLetter())){
 					resultList.add( action.getActionLetter());
 				}				
 			}

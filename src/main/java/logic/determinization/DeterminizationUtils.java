@@ -49,7 +49,8 @@ public class DeterminizationUtils {
 		Set<State> resultSet = new HashSet<>();
 		for( State t : T){
 			for( Action action : t.getExitActions()){
-				if( ( action.getActionLetter()).equals(a) ){
+				if( action.getActionLetter() != null 
+						&& ( action.getActionLetter()).equals(a) ){
 					resultSet.add( action.getNextState() );
 				}
 			}

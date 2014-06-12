@@ -67,7 +67,6 @@ public class CreatorTest {
 		assertEquals(Pattern.matches(regex, line3), finiteStateMachine.isMatch(line3));
 		String line4="sdsasdsasfasdfsaszdasd";
 		assertEquals(Pattern.matches(regex, line4), finiteStateMachine.isMatch(line4));
-		
 	}
 	
 	@Test
