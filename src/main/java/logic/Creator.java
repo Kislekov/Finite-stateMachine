@@ -64,6 +64,7 @@ public class Creator {
         RegexLexer lexer = new RegexLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         RegexParser parser = new RegexParser(tokens);
+        parser.removeErrorListeners();
         parser.setErrorHandler(new BailErrorStrategy());
         ParseTree tree = parser.expression();
 		return tree;
