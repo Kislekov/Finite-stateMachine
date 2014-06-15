@@ -18,7 +18,9 @@ public class State {
 		return exitActions;
 	}
 	public void setExitActions(List<Action> exitActions) {
-		this.exitActions = exitActions;
+		List<Action> newActions = new ArrayList<>();
+		newActions.addAll(exitActions);
+		this.exitActions = newActions;
 	}
 	public long getId() {
 		return id;

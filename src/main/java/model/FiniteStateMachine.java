@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
-
 import static main.java.logic.determinization.DeterminizationUtils.*;
+import static main.java.logic.minimization.MinimizationUtils.*;
 
 public class FiniteStateMachine {
 	
@@ -35,6 +35,11 @@ public class FiniteStateMachine {
 	public void setAllStates(List<State> allStates) {
 		this.allStates = allStates;
 	}
+	
+	public int getNumberOfStates(){
+		return allStates.size();
+	}
+	
 	public boolean isMatch(String string){
 		int startIndex=0;
 		if(isStateMatch(string, startIndex, startState)){
@@ -160,5 +165,78 @@ public class FiniteStateMachine {
 			}
 		}
 		return resultList;
+	}
+	
+	public void minimize(){
+		Set<Set<State>> devidedSets = null;
+		Set<Set<State>> P = new HashSet<>();
+		Set<State> endStates = new HashSet<>();
+		endStates.addAll(this.endStates);
+		P.add(endStates);
+		P.add(getAllEndDifference());
+		List<Character> incomingCharacters = getIncomingCharacters();
+		boolean pWasDevided = true;
+		while( pWasDevided ){
+			pWasDevided = false;
+			for( Set<State> G : P){
+				devidedSets = devideSetByOneSymbol(G, P, incomingCharacters);
+				if( devidedSets != null){
+					pWasDevided = true;
+					P.remove(G);
+					P.addAll(devidedSets);
+				}
+				if( pWasDevided ){
+					break;
+				}
+			}
+		}
+		////Choose delegates and connect them.
+		State delegate = null;
+		State nextState = null;
+		State nextDelegate = null;
+		Set<State> nextStateGroup = null;
+		List<Action> newExitActions = new ArrayList<>();
+		for( Set<State> G : P){
+			delegate = G.iterator().next();
+			for( Character character : incomingCharacters){
+				for( Action action : delegate.getExitActions()){
+					if( action.getActionLetter().equals(character)){
+						nextState = action.getNextState();
+						nextStateGroup = findGroupContainingState(nextState, P);
+						nextDelegate = nextStateGroup.iterator().next();
+						Action newActionForDelegates = new Action();
+						newActionForDelegates.setActionLetter(character);
+						newActionForDelegates.setNextState(nextDelegate);
+						newExitActions.add(newActionForDelegates);
+					}
+				}
+			}
+			delegate.setExitActions(newExitActions);
+			newExitActions.clear();
+		}
+		/////Create new start, end and all states.
+		List<State> newAllStates = new ArrayList<>();
+		List<State> newEndStates = new ArrayList<>();
+		State newStartState = null;
+		for( Set<State> G : P ){
+			delegate = G.iterator().next();
+			newAllStates.add(delegate);
+			if( G.contains(this.startState)){
+				newStartState = delegate;
+			}
+			if( this.endStates.contains(delegate)){
+				newEndStates.add(delegate);
+			}
+		}
+		this.startState = newStartState;
+		this.endStates = newEndStates;
+		this.allStates = newAllStates;		
+	}
+	
+	private Set<State> getAllEndDifference(){
+		Set<State> result = new HashSet<>();
+		result.addAll(allStates);
+		result.removeAll(endStates);
+		return result;
 	}
 }
