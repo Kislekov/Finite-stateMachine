@@ -29,6 +29,7 @@ public class Creator {
 		FiniteStateMachine finiteStateMachine=new FiniteStateMachine();
 		createStartStateConnection(finiteStateMachine.getStartState(), expression.getStartStates());
 		finiteStateMachine.setEndStates(expression.getEndStates());
+		expression.getAllStates().add(finiteStateMachine.getStartState());
 		finiteStateMachine.setAllStates(expression.getAllStates());
 		return finiteStateMachine;
 	}
@@ -53,7 +54,7 @@ public class Creator {
 	private ParseTree parseRegex(String regex) throws WrongRegexFormatException{
 		try{
 			return tryParseRegex(regex);
-		}catch(ParseCancellationException e){
+		}catch(Throwable e){
 			throw new WrongRegexFormatException(e);
 		}
 	}
@@ -61,10 +62,13 @@ public class Creator {
 	private ParseTree tryParseRegex(String regex) {
 		CharStream input=new ANTLRInputStream(regex.toCharArray(), regex.length());
         RegexLexer lexer = new RegexLexer(input);
+        lexer.removeErrorListeners();
+        lexer.addErrorListener(new ExcErrorListener());
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         RegexParser parser = new RegexParser(tokens);
         parser.removeErrorListeners();
         parser.setErrorHandler(new BailErrorStrategy());
+        parser.addErrorListener(new ExcErrorListener());
         ParseTree tree = parser.expression();
 		return tree;
 	}

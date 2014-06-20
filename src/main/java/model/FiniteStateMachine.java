@@ -78,18 +78,16 @@ public class FiniteStateMachine {
 	
 	@Override
 	public String toString(){
-		String result = "";
-		result += "[ startState :\n\t";
-		result=startState.toString();
-		result += "\nendStates :\n\t";
+		String result = "\n\n\tStart state :\n";
+		result += "\t" + startState.toString() + "\n";
+		result += "\n\n\tEnd states :\n";
 		for(State state : endStates){
-			result += state.toString() + "\n\t";
+			result += "\t" + state.toString() + "\n";
 		}
-		result += "\nALL_STATES :\n\t";
+		result += "\n\n\tAll states :\n\t";
 		for(State state : allStates){
-			result += state.toString() + "\n\t";
+			result += "\t" + state.toString() + "\n";
 		}
-		result += "]";
 		return result;
 	}
 	
@@ -145,7 +143,8 @@ public class FiniteStateMachine {
 		for( Set<State> newState : Dstates){
 			for( State oldState : newState){
 				if( endStates.contains(oldState)){
-					newEndStates.add(map.get(newState));					
+					newEndStates.add(map.get(newState));		
+					break;
 				}
 			}
 		}
@@ -173,7 +172,10 @@ public class FiniteStateMachine {
 		Set<State> endStates = new HashSet<>();
 		endStates.addAll(this.endStates);
 		P.add(endStates);
-		P.add(getAllEndDifference());
+		Set<State> difference = getAllEndDifference();
+		if( difference != null){
+			P.add(difference);
+		}		
 		List<Character> incomingCharacters = getIncomingCharacters();
 		boolean pWasDevided = true;
 		while( pWasDevided ){
@@ -237,6 +239,9 @@ public class FiniteStateMachine {
 		Set<State> result = new HashSet<>();
 		result.addAll(allStates);
 		result.removeAll(endStates);
+		if( result.size() == 0 ){
+			return null;
+		}
 		return result;
 	}
 }

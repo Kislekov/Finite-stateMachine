@@ -31,12 +31,10 @@ public class State {
 	
 	@Override
 	public String toString(){
-		String result = "";
-		result += "< id :" + id + "\n\t exitActions :\n\t\t";
+		String result = "\n\t" + id + "\n";
 		for(Action action : exitActions){
-			result += action.toString() + "\n";
+			result += "\n\t --" + action.getActionLetter() + "--> " + action.getNextState().id ;
 		}
-		result += "\t>";
 		return result;
 	}
 	

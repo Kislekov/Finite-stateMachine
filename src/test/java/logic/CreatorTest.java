@@ -2,6 +2,7 @@ package test.java.logic;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import main.java.logic.Creator;
 import main.java.logic.WrongRegexFormatException;
 import main.java.model.FiniteStateMachine;
@@ -28,6 +29,12 @@ public class CreatorTest {
 		creator.createFromRegex(regex);
 	}
 	
+	@Test(expected=WrongRegexFormatException.class)
+	public void  shouldThrowParseRegexExcpetion2() throws WrongRegexFormatException{
+		String regex="a*\\\\\\a\\44$$";
+		creator.createFromRegex(regex);
+	}
+	
 	@Test
 	public void shouldWorkAsRegexDo() throws WrongRegexFormatException{
 		String regex="ab*ba(L|D)+";
@@ -40,6 +47,7 @@ public class CreatorTest {
 		assertEquals(Pattern.matches(regex, line3), finiteStateMachine.isMatch(line3));
 		String line4="abbbaaaaLDLDLb";
 		assertEquals(Pattern.matches(regex, line4), finiteStateMachine.isMatch(line4));
+		assertTrue(notNullStates(finiteStateMachine));
 	}
 	
 	@Test
@@ -52,6 +60,7 @@ public class CreatorTest {
 		assertEquals(Pattern.matches(regex, line2), finiteStateMachine.isMatch(line2));
 		String line3="ddsdasda";	
 		assertEquals(Pattern.matches(regex, line3), finiteStateMachine.isMatch(line3));		
+		assertTrue(notNullStates(finiteStateMachine));
 	}
 	
 	
@@ -67,6 +76,7 @@ public class CreatorTest {
 		assertEquals(Pattern.matches(regex, line3), finiteStateMachine.isMatch(line3));
 		String line4="sdsasdsasfasdfsaszdasd";
 		assertEquals(Pattern.matches(regex, line4), finiteStateMachine.isMatch(line4));
+		assertTrue(notNullStates(finiteStateMachine));
 	}
 	
 	@Test
@@ -80,7 +90,8 @@ public class CreatorTest {
 		String line3="bca";
 		assertEquals(Pattern.matches(regex, line3), finiteStateMachine.isMatch(line3));
 		String line4="bcaa";
-		assertEquals(Pattern.matches(regex, line4), finiteStateMachine.isMatch(line4));		
+		assertEquals(Pattern.matches(regex, line4), finiteStateMachine.isMatch(line4));	
+		assertTrue(notNullStates(finiteStateMachine));
 	}
 	
 	@Test
@@ -88,6 +99,19 @@ public class CreatorTest {
 		String regex="a*|bca*";
 		FiniteStateMachine finiteStateMachine=creator.createFromRegex(regex);
 		assertNotNull(finiteStateMachine.getAllStates());
+		assertTrue(notNullStates(finiteStateMachine));
+	}
+	
+	private boolean notNullStates( FiniteStateMachine finiteStateMachine){
+		if( finiteStateMachine.getStartState() != null
+				&& finiteStateMachine.getEndStates() != null 
+				&& finiteStateMachine.getEndStates().size() >= 1
+				&& finiteStateMachine.getAllStates() != null 
+				&& finiteStateMachine.getAllStates().size() >= 1
+				){
+			return true;
+		}
+		return false;
 	}
 	
 }

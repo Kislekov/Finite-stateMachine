@@ -36,6 +36,7 @@ public class MinimazingTest {
 		assertEquals(Pattern.matches(regex, line3), finiteStateMachine.isMatch(line3));
 		String line4="sdsasdsasfasdfsaszdasd";
 		assertEquals(Pattern.matches(regex, line4), finiteStateMachine.isMatch(line4));
+		assertTrue(notNullStates(finiteStateMachine));
 	}
 	
 	@Test
@@ -47,12 +48,26 @@ public class MinimazingTest {
 		finiteStateMachine.minimize();
 		System.out.println("\nNumber of states after minimization: " + finiteStateMachine.getNumberOfStates() + "\n");
 		String line1="aaaaaaaaa";
+		System.out.println(finiteStateMachine.toString());
 		assertTrue(finiteStateMachine.isMatch(line1));
 		String line2="bc";
 		assertTrue(finiteStateMachine.isMatch(line2));
 		String line3="bca";
 		assertTrue(finiteStateMachine.isMatch(line3));
 		String line4="bcaa";
-		assertTrue( finiteStateMachine.isMatch(line4));		
+		assertTrue( finiteStateMachine.isMatch(line4));	
+		assertTrue(notNullStates(finiteStateMachine));
+	}
+	
+	private boolean notNullStates( FiniteStateMachine finiteStateMachine){
+		if( finiteStateMachine.getStartState() != null
+				&& finiteStateMachine.getEndStates() != null 
+				&& finiteStateMachine.getEndStates().size() >= 1
+				&& finiteStateMachine.getAllStates() != null 
+				&& finiteStateMachine.getAllStates().size() >= 1
+				){
+			return true;
+		}
+		return false;
 	}
 }
